@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import {
   Route,
   Switch,
-  withRouter
+  withRouter,
+  BrowserRouter as Router
 } from 'react-router-dom'
 import axios from 'axios'
 
@@ -11,9 +12,12 @@ import SignUpForm from '../SignUpForm/SignUpForm'
 import LogInForm from '../LogInForm/LogInForm'
 import LogOut from '../LogOut/LogOut'
 import Profile from '../Profile/Profile'
-
+import CreateComment from './components/CreateComment';
+import UpdateComment from './components/UpdateComment';
+import ShowCommentDescription from './components/ShowCommentDescription';
 
 import './App.css'
+import ShowCommentList from './components/ShowCommentList'
 
 const databaseUrl = process.env.NODE_ENV === 'production' ? process.env.BACKEND_APP_URL : 'http://localhost:3000'
 
@@ -165,6 +169,18 @@ class App extends Component {
         </div>
       </div>
     )
+  }
+  render() {
+    return (
+      <Router>
+        <div>
+          <Route exact path='/' component={ShowCommentList} />
+          <Route path='/create-comment' component={CreateComment} />
+          <Route path='/edit-comment/:id' component={UpdateComment} />
+          <Route path='/show-comment/:id' component={ShowCommentDescription} />
+        </div>
+      </Router>
+    );
   }
 }
 
