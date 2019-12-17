@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import '../App.css';
+import './App/App.css';
 import axios from 'axios';
 
 class showCommentDescription extends Component {
@@ -16,7 +16,6 @@ class showCommentDescription extends Component {
     axios
       .get('http://localhost:3000/api/comments/'+this.props.match.params.id)
       .then(res => {
-        // console.log("Print-showBookDetails-API-response: " + res.data);
         this.setState({
           comment: res.data
         })
@@ -87,12 +86,12 @@ class showCommentDescription extends Component {
             </div>
           </div>
           <div>
-            { CommentItem }
+            { UserComment }
           </div>
 
           <div className="row">
             <div className="col-md-6">
-              <button type="button" className="btn btn-outline-danger btn-lg btn-block" onClick={this.onDeleteClick.bind(this,book._id)}>Delete Book</button><br />
+              <button type="button" className="btn btn-outline-danger btn-lg btn-block" onClick={this.onDeleteClick.bind(this,comment._id)}>Delete Comment</button><br />
             </div>
 
             <div className="col-md-6">

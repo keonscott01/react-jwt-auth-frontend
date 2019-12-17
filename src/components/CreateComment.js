@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import '../App.css';
+import './App/App.css';
 import axios from 'axios';
 
 
@@ -60,7 +60,7 @@ class CreateComment extends Component {
                 <div className='form-group'>
                   <input
                     type='text'
-                    placeholder='Comment Name?'
+                    placeholder='Comment Description'
                     name='comment'
                     className='form-control'
                     value={this.state.comment}

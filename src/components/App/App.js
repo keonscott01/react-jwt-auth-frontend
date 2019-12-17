@@ -3,21 +3,23 @@ import {
   Route,
   Switch,
   withRouter,
+  Link,
   BrowserRouter as Router
 } from 'react-router-dom'
 import axios from 'axios'
+import './App.css';
 
 import NavBar from '../NavBar/NavBar'
 import SignUpForm from '../SignUpForm/SignUpForm'
 import LogInForm from '../LogInForm/LogInForm'
 import LogOut from '../LogOut/LogOut'
 import Profile from '../Profile/Profile'
-import CreateComment from './components/CreateComment';
-import UpdateComment from './components/UpdateComment';
-import ShowCommentDescription from './components/ShowCommentDescription';
-
-import './App.css'
-import ShowCommentList from './components/ShowCommentList'
+import CreateComment from '../CreateComment';
+import UpdateComment from '../UpdateComment';
+import ShowCommentDescription from '../ShowCommentDescription';
+import ShowCommentList from '../ShowCommentList';
+import Books from '../Books';
+import SearchBox from '../SearchBox';
 
 const databaseUrl = process.env.NODE_ENV === 'production' ? process.env.BACKEND_APP_URL : 'http://localhost:3000'
 
@@ -133,6 +135,7 @@ class App extends Component {
 
   render() {
     return (
+      
       <div>
         <NavBar isLoggedIn={this.state.isLoggedIn} user={this.state.user} />
         <div className='body'>
@@ -165,23 +168,35 @@ class App extends Component {
                 )
               }}
             />
+            <Route exact path='/' component={ShowCommentList} />
+            <Route path='/create-comment' component={CreateComment} />
+            <Router basename='/'>
+        <nav>
+          <Link to="/Search">Search</Link>{' '}
+        </nav>
+
+        <div>
+        <Route path="/Search" component={Books} /> 
+        {/* <Route  exact path="/Image" component={BookImage}/> */}
+        </div>  
+      </Router>
           </Switch>
         </div>
       </div>
     )
   }
-  render() {
-    return (
-      <Router>
-        <div>
-          <Route exact path='/' component={ShowCommentList} />
-          <Route path='/create-comment' component={CreateComment} />
-          <Route path='/edit-comment/:id' component={UpdateComment} />
-          <Route path='/show-comment/:id' component={ShowCommentDescription} />
-        </div>
-      </Router>
-    );
-  }
+  // render() {
+  //   return (
+  //     <Router>
+  //       <div>
+  //         <Route exact path='/' component={ShowCommentList} />
+  //         <Route path='/create-comment' component={CreateComment} />
+  //         <Route path='/edit-comment/:id' component={UpdateComment} />
+  //         <Route path='/show-comment/:id' component={ShowCommentDescription} />
+  //       </div>
+  //     </Router>
+  //   );
+  // }
 }
 
 export default withRouter(App)
