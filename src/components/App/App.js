@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import {
   Route,
   Switch,
-  withRouter,
-  Link,
+  withRouter, 
   BrowserRouter as Router
 } from 'react-router-dom'
 import axios from 'axios'
@@ -20,6 +19,7 @@ import ShowCommentDescription from '../ShowCommentDescription';
 import ShowCommentList from '../ShowCommentList';
 import Books from '../Books';
 import SearchBox from '../SearchBox';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const databaseUrl = process.env.NODE_ENV === 'production' ? process.env.BACKEND_APP_URL : 'http://localhost:3000'
 
@@ -61,6 +61,22 @@ class App extends Component {
     //     isLoggedIn: false
     //   })
     // }
+  }
+  userSearch = (e) => {
+    axios.request({
+      url: 'https://www.googleapis.com/books/v1/volumes?q=' + e + '&key=AIzaSyD-bXZCEMGjGD9B-LKJ9rHbLyKYsCqhiDg',
+      method: 'get',
+    })
+      .then(response => {
+        this.setState({ books: response.data.items })
+        console.log(response.data.items)
+
+      })
+      .catch(() => {
+        return <div>
+          <p>Error</p>
+        </div>
+      })
   }
 
   handleLogOut = (e) => {
@@ -118,6 +134,7 @@ class App extends Component {
       .then(response => {
         console.log(response)
         window.localStorage.setItem('token', response.data.token)
+        window.localStorage.setItem('user', JSON.stringify(response.data.user))
         this.setState({
           isLoggedIn: true,
           user: response.data.user,
@@ -135,7 +152,7 @@ class App extends Component {
 
   render() {
     return (
-      
+
       <div>
         <NavBar isLoggedIn={this.state.isLoggedIn} user={this.state.user} />
         <div className='body'>
@@ -168,35 +185,13 @@ class App extends Component {
                 )
               }}
             />
-            <Route exact path='/' component={ShowCommentList} />
-            <Route path='/create-comment' component={CreateComment} />
-            <Router basename='/'>
-        <nav>
-          <Link to="/Search">Search</Link>{' '}
-        </nav>
-
-        <div>
-        <Route path="/Search" component={Books} /> 
-        {/* <Route  exact path="/Image" component={BookImage}/> */}
-        </div>  
-      </Router>
+            <Route exact path='/' component={SearchBox} />
           </Switch>
         </div>
       </div>
     )
   }
-  // render() {
-  //   return (
-  //     <Router>
-  //       <div>
-  //         <Route exact path='/' component={ShowCommentList} />
-  //         <Route path='/create-comment' component={CreateComment} />
-  //         <Route path='/edit-comment/:id' component={UpdateComment} />
-  //         <Route path='/show-comment/:id' component={ShowCommentDescription} />
-  //       </div>
-  //     </Router>
-  //   );
-  // }
+
 }
 
 export default withRouter(App)

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import './App/App.css';
 import axios from 'axios';
 
@@ -20,9 +20,12 @@ class CreateComment extends Component {
   onSubmit = e => {
     e.preventDefault();
 
+    let user = JSON.parse(window.localStorage.user)
+
     const data = {
+      userId: user._id,
       comment: this.state.comment,
-      date: this.state.date,
+      bookId: this.props.bookId,
     };
 
     axios
@@ -32,10 +35,9 @@ class CreateComment extends Component {
           comment: '',
           date:''
         })
-        this.props.history.push('/');
       })
-      .catch(err => {
-        console.log("Error somewhere in CreateComment component!");
+      .catch( err => {
+        console.log("Error somewhere in CreateComment component!", err);
       })
   };
 
@@ -46,36 +48,24 @@ class CreateComment extends Component {
           <div className="row">
             <div className="col-md-8 m-auto">
               <br />
-              <Link to="/" className="btn btn-outline-warning float-left">
-                  Show Comments List
-              </Link>
+              {/* <Link to='/comments-list' className="btn btn-outline-warning float-left">
+                  Show Reviews List
+              </Link> */}
             </div>
             <div className="col-md-8 m-auto">
-              <h1 className="display-4 text-center">Add Comment</h1>
+              <h2 className="display-4 text-center">Write a Review?</h2>
               <p className="lead text-center">
-                  Create new comment
+                  Good or Bad..
               </p>
 
               <form noValidate onSubmit={this.onSubmit}>
                 <div className='form-group'>
                   <input
                     type='text'
-                    placeholder='Comment Description'
+                    placeholder='Review Description'
                     name='comment'
                     className='form-control'
                     value={this.state.comment}
-                    onChange={this.onChange}
-                  />
-                </div>
-                <br />
-
-                <div className='form-group'>
-                  <input
-                    type='date'
-                    placeholder='Date'
-                    name='date'
-                    className='form-control'
-                    value={this.state.date}
                     onChange={this.onChange}
                   />
                 </div>

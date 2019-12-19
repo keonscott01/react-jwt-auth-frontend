@@ -59,13 +59,13 @@ class UpdateComment extends Component {
             <div className="col-md-8 m-auto">
               <br />
               <Link to="/" className="btn btn-outline-warning float-left">
-                  Show Comments List
+                  Show Reviews List
               </Link>
             </div>
             <div className="col-md-8 m-auto">
-              <h1 className="display-4 text-center">Edit Comment</h1>
+              <h1 className="display-4 text-center">Edit Review</h1>
               <p className="lead text-center">
-                  Update Comment's Description
+                  Update Review's Description
               </p>
             </div>
           </div>
@@ -76,7 +76,7 @@ class UpdateComment extends Component {
               <label htmlFor="title">Comment</label>
               <input
                 type='text'
-                placeholder='Comment Name'
+                placeholder='Review Name'
                 name='comment'
                 className='form-control'
                 value={this.state.comment}
@@ -97,7 +97,7 @@ class UpdateComment extends Component {
               />
             </div>
             
-            <button type="submit" className="btn btn-outline-info btn-lg btn-block">Update Comment</button>
+            <button type="submit" className="btn btn-outline-info btn-lg btn-block">Update Review</button>
             </form>
           </div>
 
